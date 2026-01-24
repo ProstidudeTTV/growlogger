@@ -63,36 +63,53 @@ If you prefer to create the zip manually:
 2. Log in to CasaOS
 3. Navigate to **App Store** or **Apps** section
 
-## Step 4: Install from GitHub Release
+## Step 4: Install the Bot
 
-### Method 1: Using GitHub Release URL (Recommended)
+**⚠️ Important:** CasaOS app store uploads often don't show apps immediately. **Use Docker Compose method instead** (recommended and most reliable).
 
-1. In CasaOS App Store, look for **"Add App"** or **"Install from URL"**
-2. Enter the GitHub release zip URL:
+### Method 1: Using Docker Compose (Recommended - Most Reliable)
+
+This method works on all CasaOS versions and bypasses app store issues:
+
+1. **Download the zip file:**
+   - Go to: https://github.com/ProstidudeTTV/growlogger/releases/download/1.0/cannabis-grow-tracker-bot-casaos.zip
+   - Download it to your CasaOS box (or extract it locally first)
+
+2. **Extract the zip file:**
+   ```bash
+   # On CasaOS box via SSH, or extract locally and upload files
+   unzip cannabis-grow-tracker-bot-casaos.zip -d /DATA/AppData/cannabis-bot
    ```
-   https://github.com/ProstidudeTTV/growlogger/releases/download/v1.0.0/cannabis-grow-tracker-bot-casaos.zip
+   Or extract to any directory accessible to CasaOS (e.g., `/DATA/AppData/`)
+
+3. **In CasaOS Web Interface:**
+   - Go to **Apps** → **Compose** (or **Containers** → **Compose**)
+   - Click **"Create Stack"** or **"New Compose"** button
+   - Name: `cannabis-bot`
+   - Copy the **entire contents** of `docker-compose.yml` from the extracted files
+   - Set **Build Context** to the extracted directory path:
+     - Example: `/DATA/AppData/cannabis-bot`
+     - Or the full path where you extracted the files
+   - Click **Next** or **Configure**
+
+4. **Add Environment Variables:**
+   - CasaOS will show a form to add environment variables
+   - Add all required variables (see Step 5 below for the list)
+   - Click **Deploy** or **Start**
+
+This method works immediately and doesn't rely on CasaOS app store functionality.
+
+### Method 2: App Store Upload (May Not Work - Try if Method 1 doesn't work)
+
+If you want to try the app store method (often doesn't show apps):
+
+1. In CasaOS, go to **App Store** → **"More Apps"** or **"Add Source"**
+2. Enter the GitHub release URL:
    ```
-   (Replace `v1.0.0` with your actual release tag)
-3. CasaOS will download and extract the zip file
-4. The app configuration will be loaded from `casaos-app.json`
-
-### Method 2: Manual Upload
-
-1. Download the zip file from your GitHub release
-2. In CasaOS, go to **App Store** → **"Import App"** or **"Upload"**
-3. Upload the `cannabis-grow-tracker-bot-casaos.zip` file
-4. CasaOS will extract and configure the app
-
-### Method 3: Using Docker Compose Directly
-
-If CasaOS doesn't support zip import, you can use Docker Compose:
-
-1. Extract the zip file on your CasaOS box
-2. In CasaOS, go to **Containers** or **Docker** section
-3. Look for **"Compose"** or **"Stack"** option
-4. Create a new stack named `cannabis-bot`
-5. Copy the contents of `docker-compose.prod.yml` into the compose editor
-6. Set the build context to the extracted directory
+   https://github.com/ProstidudeTTV/growlogger/releases/download/1.0/cannabis-grow-tracker-bot-casaos.zip
+   ```
+3. Wait for CasaOS to process it
+4. **If the app doesn't appear**, use Method 1 instead (Docker Compose)
 
 ## Step 5: Configure Environment Variables
 
