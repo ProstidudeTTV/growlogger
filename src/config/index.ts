@@ -25,5 +25,11 @@ export const config = {
     anonKey: process.env.SUPABASE_ANON_KEY,
     serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
   },
+  ai: {
+    apiKey: process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY, // Prefer Gemini if set, fallback to OpenAI
+    apiUrl: process.env.OPENAI_API_URL, // Optional: for Ollama or custom OpenAI-compatible APIs
+    model: process.env.OPENAI_MODEL || (process.env.GEMINI_API_KEY ? 'gemini-flash-latest' : 'gpt-3.5-turbo'), // Model name (gemini-flash-latest for Gemini, gpt-3.5-turbo for OpenAI)
+    provider: process.env.AI_PROVIDER || 'auto', // 'openai', 'gemini', 'ollama', or 'auto'
+  },
   environment: process.env.NODE_ENV || 'development',
 } as const;

@@ -1,0 +1,162 @@
+{
+  "type": "app",
+  "version": "0.1.0",
+  "name": "Cannabis Grow Tracker Discord Bot",
+  "display_name": "Cannabis Grow Tracker Bot",
+  "description": "A Discord bot for tracking cannabis grows with daily prompts, strain identification, and AI-powered plant problem diagnosis.",
+  "author": "Cannabis Grow Tracker",
+  "icon": "https://raw.githubusercontent.com/casaos-apps/apps/main/icons/discord.png",
+  "category": "automation",
+  "tagline": "Track your cannabis grows with daily updates and AI assistance",
+  "screenshots": [],
+  "main": "docker-compose.yml",
+  "docker_compose": {
+    "version": "3.8",
+    "services": {
+      "cannabis-bot": {
+        "image": "${IMAGE:-cannabis-grow-tracker-bot:latest}",
+        "container_name": "cannabis-grow-tracker-bot",
+        "restart": "unless-stopped",
+        "build": {
+          "context": ".",
+          "dockerfile": "Dockerfile"
+        },
+        "environment": [
+          "DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}",
+          "DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}",
+          "DISCORD_GUILD_ID=${DISCORD_GUILD_ID}",
+          "SUPABASE_URL=${SUPABASE_URL}",
+          "SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}",
+          "SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}",
+          "OPENAI_API_KEY=${OPENAI_API_KEY}",
+          "OPENAI_API_URL=${OPENAI_API_URL}",
+          "OPENAI_MODEL=${OPENAI_MODEL}",
+          "AI_PROVIDER=${AI_PROVIDER}",
+          "GEMINI_API_KEY=${GEMINI_API_KEY}",
+          "NODE_ENV=production"
+        ],
+        "networks": [
+          "bot-network"
+        ],
+        "healthcheck": {
+          "test": ["CMD", "node", "-e", "process.exit(0)"],
+          "interval": "30s",
+          "timeout": "10s",
+          "retries": 3,
+          "start_period": "40s"
+        },
+        "logging": {
+          "driver": "json-file",
+          "options": {
+            "max-size": "10m",
+            "max-file": "3"
+          }
+        }
+      }
+    },
+    "networks": {
+      "bot-network": {
+        "driver": "bridge"
+      }
+    }
+  },
+  "env": [
+    {
+      "name": "DISCORD_BOT_TOKEN",
+      "label": "Discord Bot Token",
+      "description": "Your Discord bot token from the Discord Developer Portal",
+      "required": true,
+      "type": "string",
+      "mask": true
+    },
+    {
+      "name": "DISCORD_CLIENT_ID",
+      "label": "Discord Client ID",
+      "description": "Your Discord bot's client ID",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "name": "DISCORD_GUILD_ID",
+      "label": "Discord Guild ID",
+      "description": "Your Discord server (guild) ID",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "name": "SUPABASE_URL",
+      "label": "Supabase URL",
+      "description": "Your Supabase project URL (e.g., https://xxxxx.supabase.co)",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "name": "SUPABASE_ANON_KEY",
+      "label": "Supabase Anon Key",
+      "description": "Your Supabase anonymous/public key",
+      "required": true,
+      "type": "string",
+      "mask": true
+    },
+    {
+      "name": "SUPABASE_SERVICE_ROLE_KEY",
+      "label": "Supabase Service Role Key",
+      "description": "Your Supabase service role key (keep this secret!)",
+      "required": true,
+      "type": "string",
+      "mask": true
+    },
+    {
+      "name": "AI_PROVIDER",
+      "label": "AI Provider",
+      "description": "AI provider to use: 'gemini' (free), 'openai', or 'ollama'",
+      "required": false,
+      "type": "string",
+      "default": "gemini"
+    },
+    {
+      "name": "GEMINI_API_KEY",
+      "label": "Gemini API Key",
+      "description": "Google Gemini API key (required if AI_PROVIDER=gemini). Get it free at https://makersuite.google.com/app/apikey",
+      "required": false,
+      "type": "string",
+      "mask": true
+    },
+    {
+      "name": "OPENAI_API_KEY",
+      "label": "OpenAI API Key",
+      "description": "OpenAI API key (required if AI_PROVIDER=openai)",
+      "required": false,
+      "type": "string",
+      "mask": true
+    },
+    {
+      "name": "OPENAI_API_URL",
+      "label": "Ollama API URL",
+      "description": "Ollama API URL (required if AI_PROVIDER=ollama). Example: http://192.168.1.160:11434/api/generate",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "OPENAI_MODEL",
+      "label": "AI Model",
+      "description": "AI model name. For Gemini: 'gemini-1.5-flash' or 'gemini-1.5-pro'. For Ollama: model name like 'llama3'",
+      "required": false,
+      "type": "string",
+      "default": "gemini-1.5-flash"
+    }
+  ],
+  "ports": [],
+  "volumes": [],
+  "devices": [],
+  "capabilities": [],
+  "requirements": {
+    "cpu": "0.5",
+    "memory": "512M"
+  },
+  "homepage": "https://github.com/yourusername/cannabis-grow-tracker-discord-bot",
+  "repository": "https://github.com/yourusername/cannabis-grow-tracker-discord-bot",
+  "store": {
+    "tags": ["discord", "bot", "cannabis", "tracking", "ai", "automation"]
+  }
+}

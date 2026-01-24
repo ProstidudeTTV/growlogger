@@ -6,6 +6,9 @@ import { handleFlowerCommand, handleFlowerResponse } from '../commands/flower.js
 import { handleHarvestCommand } from '../commands/harvest.js';
 import { handleResultsCommand, handleResultsResponse } from '../commands/results.js';
 import { handleHelpCommand } from '../commands/help.js';
+import { handleIdCommand } from '../commands/id.js';
+import { handleAskCommand } from '../commands/ask.js';
+import { handlePromptCommand } from '../commands/prompt.js';
 import { sendDailyPrompts, handleDailyPromptResponse } from '../services/promptService.js';
 
 // Create Discord client
@@ -61,6 +64,15 @@ client.on(Events.MessageCreate, async (message: Message) => {
         case '!help':
           await handleHelpCommand(message, userId);
           break;
+        case '!id':
+          await handleIdCommand(message, userId);
+          break;
+        case '!ask':
+          await handleAskCommand(message, userId);
+          break;
+        case '!prompt':
+          await handlePromptCommand(message, userId);
+          break;
         default:
           // Not a recognized command, might be a response to a multi-step command
           // Let command handlers check if they're expecting input
@@ -109,6 +121,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
         break;
       case 'help':
         await handleHelpCommand(interaction as ChatInputCommandInteraction, userId);
+        break;
+      case 'id':
+        await handleIdCommand(interaction as ChatInputCommandInteraction, userId);
         break;
       default:
         await interaction.reply({ content: 'Unknown command!', ephemeral: true });

@@ -18,6 +18,7 @@ Railway is great for Discord bots with automatic deployments.
    - `SUPABASE_URL`
    - `SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
+   - `OPENAI_API_KEY` (optional, for `!id` command)
    - `NODE_ENV=production`
 5. Set start command: `npm start`
 6. Railway will automatically build (`npm run build`) and deploy
@@ -106,6 +107,11 @@ DISCORD_GUILD_ID=your_discord_guild_id_here
 SUPABASE_URL=https://swoaybrkwzdjporuljaz.supabase.co
 SUPABASE_ANON_KEY=your_supabase_anon_key_here
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
+
+NODE_ENV=production
+
+# Optional: For !id command (strain identification)
+OPENAI_API_KEY=your_openai_api_key_here
 
 NODE_ENV=production
 ```

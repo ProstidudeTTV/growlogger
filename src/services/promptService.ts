@@ -46,7 +46,7 @@ export async function sendInitialDailyPrompt(client: Client, grow: Grow, guildCh
       await dmChannel.send({
         embeds: [createInfoEmbed(
           '📸 Daily Update Prompt',
-          `Welcome! It's time for your first update for: **${grow.strain || 'Unnamed Grow'}**\n\n` +
+          `It's time to update your grow: **${grow.strain || 'Unnamed Grow'}**\n\n` +
           'Please send pictures of your grow (you can attach multiple images, or type "skip" to skip pictures):'
         )],
       });

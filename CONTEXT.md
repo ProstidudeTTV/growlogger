@@ -69,6 +69,7 @@ package.json
 5. **Embedded Summaries**: The bot will generate daily summaries with embedded information and attached pictures.
 6. **Harvest**: When a user sends the `!harvest` command, the bot stops the grow log for that grow. This includes stopping daily prompts, stopping the grow timer, and marking the grow as harvested in the database with a harvest date.
 7. **Results**: After a grow has been harvested using `!harvest`, users can send the `!results` command to input harvest data. The bot will prompt for wet weight, dry weight, and notes. Users can update these results multiple times. The command can only be used after `!harvest` has been called (validation required).
+8. **Strain Identification (!id)**: Users can send the `!id <strain name>` command to get AI-powered information about a specific cannabis strain. The bot uses OpenAI (or compatible API) to provide detailed information including strain type, THC/CBD content, effects, flavors, growing information, flowering time, yield, and difficulty. Requires `OPENAI_API_KEY` environment variable to be configured.
 
 # API & Database
 

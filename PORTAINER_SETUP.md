@@ -28,12 +28,18 @@ Make sure you have:
    - **Build method:** 
      - **Option A (Git Repository):** 
        - Select "Repository"
-       - Enter your Git repository URL
-       - Branch: `main` (or your default branch)
-       - Compose path: `docker-compose.yml`
-     - **Option B (Upload Files):**
+       - Enter your Git repository URL: `https://github.com/ProstidudeTTV/growlogger.git`
+       - **Important:** If your repository is private, you need to add authentication:
+         - Go to **Environments** → **Git credentials** in Portainer
+         - Add a credential with your GitHub username and Personal Access Token (PAT)
+         - Select this credential when creating the stack
+       - **Branch:** `main` (make sure this matches your remote branch)
+       - **Compose path:** `docker-compose.yml` or `docker-compose.prod.yml`
+       - **Reference name:** Leave empty or use `refs/heads/main`
+     - **Option B (Upload Files - Recommended if having issues):**
        - Select "Web editor"
        - Upload your files or paste docker-compose.yml content
+       - This avoids Git authentication issues
 
 3. **Set Environment Variables**
    Click "Advanced mode" and add these environment variables:
@@ -45,6 +51,7 @@ Make sure you have:
    SUPABASE_ANON_KEY=your_supabase_anon_key
    SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
    NODE_ENV=production
+   OPENAI_API_KEY=your_openai_api_key_here
    ```
 
 4. **Deploy Stack**
@@ -159,8 +166,48 @@ Make sure these are set in Portainer:
 | `SUPABASE_ANON_KEY` | Supabase anonymous key | Yes |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key | Yes |
 | `NODE_ENV` | Set to `production` | Recommended |
+| `OPENAI_API_KEY` | OpenAI API key (for `!id` command) | No (optional) |
 
 ## Troubleshooting
+
+### Git Clone Errors
+
+#### "Reference not found" or "Failed to clone git repository"
+
+**Solutions:**
+
+1. **Check Branch Name**
+   - Verify your branch exists: `git ls-remote --heads origin`
+   - In Portainer, make sure the branch name matches exactly (usually `main`, not `master`)
+
+2. **Private Repository Authentication**
+   - If your repository is private, you MUST set up Git credentials:
+     - Go to **Environments** → **Git credentials** in Portainer
+     - Click **Add credential**
+     - Enter:
+       - **Username:** Your GitHub username (`ProstidudeTTV`)
+       - **Password:** A GitHub Personal Access Token (PAT)
+       - **Description:** `GitHub credentials`
+     - **To create a PAT:**
+       - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+       - Click "Generate new token (classic)"
+       - Select scopes: `repo` (full control of private repositories)
+       - Generate and copy the token
+     - When creating the stack, select this credential from the dropdown
+
+3. **Use SSH Instead (Alternative)**
+   - If HTTPS doesn't work, try SSH:
+     - Change repository URL to: `git@github.com:ProstidudeTTV/growlogger.git`
+     - Add SSH key in Portainer → Environments → Git credentials
+
+4. **Use Web Editor Instead**
+   - If Git continues to fail, use the "Web editor" option:
+     - Copy/paste your `docker-compose.yml` content directly
+     - This avoids all Git authentication issues
+
+5. **Check Repository URL**
+   - Make sure the URL is correct: `https://github.com/ProstidudeTTV/growlogger.git`
+   - Verify the repository exists and is accessible
 
 ### Bot Not Starting
 

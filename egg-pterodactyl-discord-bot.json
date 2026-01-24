@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "version": "PTDL_v1"
+  },
+  "exported_at": "2024-01-01T00:00:00+00:00",
+  "name": "Discord Bot (TypeScript)",
+  "author": "cannabis-grow-tracker",
+  "description": "Discord bot built with TypeScript, discord.js, and Supabase",
+  "docker_images": {
+    "ghcr.io/pterodactyl/yolks:nodejs_18": "nodejs 18"
+  },
+  "startup": "node dist/bot/index.js",
+  "config": {
+    "files": "{}",
+    "startup": "{\r\n    \"done\": \"Bot is ready!\"\r\n}",
+    "logs": "{}",
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\n# Install dependencies\nnpm install --production=false\n\n# Build TypeScript\nnpm run build\n\n# Verify build\nif [ ! -d \"dist\" ]; then\n    echo \"ERROR: Build failed - dist directory not found\"\n    exit 1\nfi\n\necho \"Installation completed successfully\"",
+      "container": "ghcr.io/pterodactyl/yolks:nodejs_18",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Discord Bot Token",
+      "description": "Your Discord bot token",
+      "env_variable": "DISCORD_BOT_TOKEN",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": "required|string|max:200",
+      "field_type": "text"
+    },
+    {
+      "name": "Discord Client ID",
+      "description": "Your Discord bot client ID",
+      "env_variable": "DISCORD_CLIENT_ID",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|max:100",
+      "field_type": "text"
+    },
+    {
+      "name": "Discord Guild ID",
+      "description": "Your Discord server/guild ID",
+      "env_variable": "DISCORD_GUILD_ID",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|max:100",
+      "field_type": "text"
+    },
+    {
+      "name": "Supabase URL",
+      "description": "Your Supabase project URL",
+      "env_variable": "SUPABASE_URL",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|url|max:500",
+      "field_type": "text"
+    },
+    {
+      "name": "Supabase Anon Key",
+      "description": "Your Supabase anonymous/public key",
+      "env_variable": "SUPABASE_ANON_KEY",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": "required|string|max:500",
+      "field_type": "text"
+    },
+    {
+      "name": "Supabase Service Role Key",
+      "description": "Your Supabase service role key",
+      "env_variable": "SUPABASE_SERVICE_ROLE_KEY",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": "required|string|max:500",
+      "field_type": "text"
+    },
+    {
+      "name": "Node Environment",
+      "description": "Node.js environment",
+      "env_variable": "NODE_ENV",
+      "default_value": "production",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|in:development,production",
+      "field_type": "text"
+    },
+    {
+      "name": "OpenAI API Key",
+      "description": "OpenAI API key for !id command (optional)",
+      "env_variable": "OPENAI_API_KEY",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": true,
+      "rules": "nullable|string|max:200",
+      "field_type": "text"
+    }
+  ]
+}

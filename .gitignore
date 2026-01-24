@@ -23,9 +23,7 @@ build/
 
 # OS
 .DS_Store
-Thumbs.db
-
-# Logs
+Thumbs.db# Logs
 logs/
 *.log
 npm-debug.log*

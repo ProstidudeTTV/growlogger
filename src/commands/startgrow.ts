@@ -82,16 +82,19 @@ export async function handleStartGrowResponse(
 ): Promise<boolean> {
   const channel = message.channel as TextChannel;
   const state = getUserState(userId);
-  
-  // Track message IDs for deletion later
-  if (!state.data.messageIds) {
-    state.data.messageIds = [];
-  }
-  state.data.messageIds.push(message.id);
 
   if (!state || state.command !== 'startgrow') {
     return false; // Not handling this message
   }
+  
+  // Track message IDs for deletion later
+  if (!state.data) {
+    state.data = {};
+  }
+  if (!state.data.messageIds) {
+    state.data.messageIds = [];
+  }
+  state.data.messageIds.push(message.id);
 
   try {
     if (state.step === STARTGROW_STEPS.WAITING_FOR_DATE) {

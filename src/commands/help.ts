@@ -65,6 +65,49 @@ function createHelpEmbed(): EmbedBuilder {
       inline: false,
     },
     {
+      name: '🧬 !id',
+      value: 'Get AI-powered information about a specific cannabis strain. The bot will provide details about:\n' +
+        '• Strain type (Indica, Sativa, Hybrid) and genetics\n' +
+        '• THC/CBD content\n' +
+        '• Effects and medicinal benefits\n' +
+        '• Aromas, flavors, and terpenes\n' +
+        '• Growing information (flowering time, yield, difficulty)\n\n' +
+        '**Usage:** `!id <strain name>`\n' +
+        '**Example:** `!id Blue Dream` or `!id OG Kush`\n\n' +
+        'Requires OpenAI API key or Ollama instance to be configured.',
+      inline: false,
+    },
+    {
+      name: '🌿 !ask',
+      value: 'Ask any cannabis-related question and get expert AI advice. You can:\n' +
+        '• Ask questions about growing, nutrients, problems, etc.\n' +
+        '• Attach images to help identify plant problems\n' +
+        '• Get detailed troubleshooting and recommendations\n\n' +
+        '**Usage:** `!ask <your question>`\n' +
+        '**With images:** Attach images to your message along with your question\n\n' +
+        '**Examples:**\n' +
+        '• `!ask What nutrients should I use during flowering?`\n' +
+        '• `!ask What\'s wrong with my plant?` (with image attached)\n' +
+        '• `!ask How do I fix yellow leaves?` (with image attached)\n\n' +
+        '**Note:** Image analysis works best with Gemini API. Text-only questions work with any AI provider.',
+      inline: false,
+    },
+    {
+      name: '📬 !prompt',
+      value: 'Manually trigger your daily prompt if the scheduled notification didn\'t work. This command:\n' +
+        '• Only works if you have an active grow\n' +
+        '• Can only be used once per day\n' +
+        '• Only works if you haven\'t completed today\'s update yet\n' +
+        '• Sends the daily prompt to your DMs\n\n' +
+        '**Example:** `!prompt`\n\n' +
+        '**Use cases:**\n' +
+        '• The 9 AM notification didn\'t arrive\n' +
+        '• You missed the notification and want to catch up\n' +
+        '• You want to complete your update at a different time\n\n' +
+        '**Note:** If you\'ve already completed today\'s update, this command won\'t work.',
+      inline: false,
+    },
+    {
       name: '❓ !help',
       value: 'Show this help message with all commands and features.',
       inline: false,
