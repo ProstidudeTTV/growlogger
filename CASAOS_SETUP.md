@@ -13,46 +13,88 @@ Before you begin, make sure you have:
 - ✅ AI API key (Gemini recommended - free) or Ollama instance
 - ✅ Git repository access (or the bot files on your CasaOS box)
 
-## Step 1: Prepare Your Bot Files
+## Step 1: Create a Zip Package for CasaOS
 
-You have two options:
+CasaOS requires app files to be packaged in a zip file, typically hosted on GitHub Releases. Follow these steps:
 
-### Option A: Deploy from Git Repository (Recommended)
+### Option A: Use the Packaging Script (Recommended)
 
-1. Make sure your bot code is in a Git repository (GitHub, GitLab, etc.)
-2. Note the repository URL - you'll need it for CasaOS
+#### On Windows:
+1. Open PowerShell in the project directory
+2. Run: `.\package-casaos.ps1`
+3. This creates `cannabis-grow-tracker-bot-casaos.zip`
 
-### Option B: Upload Files Directly
+#### On Linux/Mac:
+1. Make the script executable: `chmod +x package-casaos.sh`
+2. Run: `./package-casaos.sh`
+3. This creates `cannabis-grow-tracker-bot-casaos.zip`
 
-1. Copy all bot files to your CasaOS box
-2. Place them in a directory accessible to CasaOS (e.g., `/DATA/AppData/cannabis-bot/`)
+### Option B: Manual Zip Creation
 
-## Step 2: Access CasaOS App Store
+If you prefer to create the zip manually:
+
+1. Create a zip file containing:
+   - `casaos-app.json`
+   - `Dockerfile`
+   - `docker-compose.yml`
+   - `docker-compose.prod.yml`
+   - `package.json`
+   - `package-lock.json`
+   - `tsconfig.json`
+   - `env.example`
+   - `src/` directory (all source files)
+   - `supabase/` directory (migrations)
+
+2. Name it: `cannabis-grow-tracker-bot-casaos.zip`
+
+### Step 2: Create a GitHub Release
+
+1. Go to your GitHub repository: https://github.com/ProstidudeTTV/growlogger
+2. Click **"Releases"** → **"Create a new release"**
+3. Create a new tag (e.g., `v1.0.0`) or use an existing tag
+4. Add a release title and description
+5. **Upload** the `cannabis-grow-tracker-bot-casaos.zip` file as a release asset
+6. Click **"Publish release"**
+7. Copy the direct download URL (format: `https://github.com/ProstidudeTTV/growlogger/releases/download/v1.0.0/cannabis-grow-tracker-bot-casaos.zip`)
+
+## Step 3: Access CasaOS App Store
 
 1. Open your web browser and navigate to your CasaOS interface (usually `http://your-casaos-ip:80` or the domain you configured)
 2. Log in to CasaOS
 3. Navigate to **App Store** or **Apps** section
 
-## Step 3: Import the App Manifest
+## Step 4: Install from GitHub Release
 
-### Method 1: Using CasaOS App Store Import
+### Method 1: Using GitHub Release URL (Recommended)
 
-1. In CasaOS, look for an **"Import"** or **"Add App"** button
-2. Click it and select **"Import from JSON"** or **"Custom App"**
-3. Upload the `casaos-app.json` file from this repository
-4. CasaOS will parse the manifest and show you the app configuration
+1. In CasaOS App Store, look for **"Add App"** or **"Install from URL"**
+2. Enter the GitHub release zip URL:
+   ```
+   https://github.com/ProstidudeTTV/growlogger/releases/download/v1.0.0/cannabis-grow-tracker-bot-casaos.zip
+   ```
+   (Replace `v1.0.0` with your actual release tag)
+3. CasaOS will download and extract the zip file
+4. The app configuration will be loaded from `casaos-app.json`
 
-### Method 2: Using Docker Compose Directly
+### Method 2: Manual Upload
 
-If CasaOS doesn't support JSON import, you can use Docker Compose:
+1. Download the zip file from your GitHub release
+2. In CasaOS, go to **App Store** → **"Import App"** or **"Upload"**
+3. Upload the `cannabis-grow-tracker-bot-casaos.zip` file
+4. CasaOS will extract and configure the app
 
-1. In CasaOS, go to **Containers** or **Docker** section
-2. Look for **"Compose"** or **"Stack"** option
-3. Create a new stack named `cannabis-bot`
-4. Copy the contents of `docker-compose.prod.yml` into the compose editor
-5. Make sure the build context points to your bot files directory
+### Method 3: Using Docker Compose Directly
 
-## Step 4: Configure Environment Variables
+If CasaOS doesn't support zip import, you can use Docker Compose:
+
+1. Extract the zip file on your CasaOS box
+2. In CasaOS, go to **Containers** or **Docker** section
+3. Look for **"Compose"** or **"Stack"** option
+4. Create a new stack named `cannabis-bot`
+5. Copy the contents of `docker-compose.prod.yml` into the compose editor
+6. Set the build context to the extracted directory
+
+## Step 5: Configure Environment Variables
 
 After importing the app, CasaOS will show you a configuration screen with all the environment variables. Fill in the following:
 
@@ -113,7 +155,7 @@ After importing the app, CasaOS will show you a configuration screen with all th
 
 - **NODE_ENV**: Set to `production` (already configured in the manifest)
 
-## Step 5: Configure Build Context (If Using Docker Compose)
+## Step 6: Configure Build Context (If Using Docker Compose)
 
 If you're using Docker Compose directly:
 
@@ -121,7 +163,7 @@ If you're using Docker Compose directly:
 2. Make sure the `Dockerfile` is in that directory
 3. CasaOS will build the Docker image automatically
 
-## Step 6: Deploy the Bot
+## Step 7: Deploy the Bot
 
 1. Review all your environment variables
 2. Click **"Deploy"** or **"Start"** button
@@ -130,7 +172,7 @@ If you're using Docker Compose directly:
    - Create the container
    - Start the bot
 
-## Step 7: Verify Deployment
+## Step 8: Verify Deployment
 
 1. Check the container status in CasaOS - it should show as **"Running"**
 2. View the logs to ensure the bot started successfully:
@@ -141,7 +183,7 @@ If you're using Docker Compose directly:
    - Go to your Discord server
    - Type `!help` - the bot should respond
 
-## Step 8: Monitor and Maintain
+## Step 9: Monitor and Maintain
 
 ### Viewing Logs
 
