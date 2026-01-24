@@ -16,16 +16,16 @@ export async function handlePromptCommand(
   userId: string
 ): Promise<void> {
   const channel = message.channel;
+  if (!channel || !('send' in channel)) return;
   
   try {
     // Get user's active grow
     const activeGrow = await GrowService.getActiveGrow(userId);
     
     if (!activeGrow) {
-      await channel.send({
+      await (channel as any).send({
         embeds: [createErrorEmbed(
-          'No Active Grow Found',
-          `You need to have an active grow to use this command. Use \`!startgrow\` to start a new grow first.`
+          `No Active Grow Found\n\nYou need to have an active grow to use this command. Use \`!startgrow\` to start a new grow first.`
         )],
       });
       return;
@@ -34,7 +34,7 @@ export async function handlePromptCommand(
     // Check if today's prompt was already completed
     const todayUpdate = await GrowService.getTodayUpdate(activeGrow.id);
     if (todayUpdate) {
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           'Already Completed',
           `You've already completed today's daily update for **${activeGrow.strain || 'Unnamed Grow'}**.\n\n` +
@@ -49,10 +49,9 @@ export async function handlePromptCommand(
     const lastUsed = lastPromptCommandUsage.get(userId);
     
     if (lastUsed === today) {
-      await channel.send({
+      await (channel as any).send({
         embeds: [createErrorEmbed(
-          'Command Already Used Today',
-          `You can only use \`!prompt\` once per day. Please wait until tomorrow to use it again.`
+          `Command Already Used Today\n\nYou can only use \`!prompt\` once per day. Please wait until tomorrow to use it again.`
         )],
       });
       return;
@@ -62,7 +61,7 @@ export async function handlePromptCommand(
     const { getUserState } = await import('../services/userStateService.js');
     const currentState = getUserState(userId);
     if (currentState && currentState.command === 'daily-prompt') {
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           'Prompt Already Active',
           'You already have an active daily prompt conversation. Please check your DMs and complete it first.'
@@ -84,8 +83,7 @@ export async function handlePromptCommand(
     // Send confirmation message
     await channel.send({
       embeds: [createSuccessEmbed(
-        'Daily Prompt Sent',
-        `I've sent you a daily prompt in your DMs for **${activeGrow.strain || 'Unnamed Grow'}**.\n\n` +
+        `Daily Prompt Sent\n\nI've sent you a daily prompt in your DMs for **${activeGrow.strain || 'Unnamed Grow'}**.\n\n` +
         'Please check your direct messages to complete your daily update.'
       )],
     });
@@ -104,8 +102,7 @@ export async function handlePromptCommand(
     console.error('Error in handlePromptCommand:', error);
     await channel.send({
       embeds: [createErrorEmbed(
-        'Error',
-        error.message || 'An error occurred while trying to send the daily prompt. Please try again later.'
+        `Error\n\n${error.message || 'An error occurred while trying to send the daily prompt. Please try again later.'}`
       )],
     });
   }

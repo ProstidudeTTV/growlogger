@@ -18,7 +18,8 @@ interface StrainInfo {
  * Check if we're using Ollama (local or network instance)
  */
 function isOllamaUrl(url: string): boolean {
-  return url.includes('ollama') || url.includes('11434') || url.includes('localhost:11434') || url.includes('127.0.0.1:11434') || url.match(/192\.168\.\d+\.\d+:11434/);
+  const match = url.match(/192\.168\.\d+\.\d+:11434/);
+  return url.includes('ollama') || url.includes('11434') || url.includes('localhost:11434') || url.includes('127.0.0.1:11434') || (match !== null);
 }
 
 /**
@@ -877,7 +878,7 @@ Provide detailed, accurate, and helpful answers. If analyzing images, describe w
         throw new Error(errorMessage);
       }
 
-      const data = await response.json();
+      const data = await response.json() as any;
 
       // Parse response based on provider
       if (usingGemini) {

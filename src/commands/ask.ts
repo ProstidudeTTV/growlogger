@@ -47,7 +47,8 @@ export async function handleAskCommand(
   } else {
     // Slash command format (for future use)
     question = interaction.options.getString('question', true);
-    attachments = Array.from(interaction.attachments.values());
+    // Slash commands don't have attachments in the same way - skip for now
+    attachments = [];
   }
 
   // Filter to only image attachments

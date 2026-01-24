@@ -141,7 +141,7 @@ export async function handleDailyPromptResponse(
         data: { ...state.data, pictures: pictureUrls },
       });
 
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           '🌡️ Environment',
           'Please describe the environment conditions (temperature, humidity, etc.) or type "skip":'
@@ -158,7 +158,7 @@ export async function handleDailyPromptResponse(
         data: { ...state.data, environment },
       });
 
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           '💧 Feeding',
           'Please describe the feeding schedule/nutrients (or type "skip"):'
@@ -175,7 +175,7 @@ export async function handleDailyPromptResponse(
         data: { ...state.data, feeding },
       });
 
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           '📈 Growth Stage',
           'Please describe the current growth stage (or type "skip"):'
@@ -192,7 +192,7 @@ export async function handleDailyPromptResponse(
         data: { ...state.data, growth_stage: growthStage },
       });
 
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           '🏥 Plant Health',
           'Please describe the plant health (or type "skip"):'
@@ -209,7 +209,7 @@ export async function handleDailyPromptResponse(
         data: { ...state.data, plant_health: plantHealth },
       });
 
-      await channel.send({
+      await (channel as any).send({
         embeds: [createInfoEmbed(
           '📝 Additional Notes',
           'Please provide any additional notes (or type "skip" to finish):'
@@ -268,7 +268,7 @@ export async function handleDailyPromptResponse(
         };
 
         // Send summary to DM first (for clearing conversation)
-        const summaryMessage = await channel.send(messageOptions);
+        const summaryMessage = await (channel as any).send(messageOptions);
 
         // Send summary to guild channel if we have a channel ID (from !startgrow)
         if (guildChannelId) {
@@ -359,7 +359,7 @@ export async function handleDailyPromptResponse(
           }
         }
       } else {
-        await channel.send({
+        await (channel as any).send({
           embeds: [createSuccessEmbed('Daily update saved! Thank you for keeping track of your grow! 🌱')],
         });
       }
@@ -370,7 +370,7 @@ export async function handleDailyPromptResponse(
   } catch (error: any) {
     console.error('Error in handleDailyPromptResponse:', error);
     clearUserState(userId);
-    await channel.send({
+    await (channel as any).send({
       embeds: [createErrorEmbed(error.message || 'An error occurred while saving your daily update.')],
     });
     return true;
