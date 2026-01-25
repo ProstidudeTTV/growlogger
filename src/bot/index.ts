@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, Events, Message, ChatInputCommandInteraction } from 'discord.js';
 import { config } from '../config/index.js';
 import cron from 'node-cron';
+import { createServer } from 'http';
 import { handleStartGrowCommand, handleStartGrowResponse } from '../commands/startgrow.js';
 import { handleFlowerCommand, handleFlowerResponse } from '../commands/flower.js';
 import { handleHarvestCommand } from '../commands/harvest.js';
@@ -148,7 +149,6 @@ process.on('unhandledRejection', (error) => {
 // Start a simple HTTP server for Render health checks
 // Render requires web services to listen on a port
 const PORT = process.env.PORT || 3000;
-import { createServer } from 'http';
 
 const server = createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
