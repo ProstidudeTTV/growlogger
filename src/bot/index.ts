@@ -145,6 +145,20 @@ process.on('unhandledRejection', (error) => {
   console.error('Unhandled promise rejection:', error);
 });
 
+// Start a simple HTTP server for Render health checks
+// Render requires web services to listen on a port
+const PORT = process.env.PORT || 3000;
+import { createServer } from 'http';
+
+const server = createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Discord bot is running');
+});
+
+server.listen(PORT, () => {
+  console.log(`✅ HTTP server listening on port ${PORT} for Render health checks`);
+});
+
 process.on('uncaughtException', (error) => {
   console.error('Uncaught exception:', error);
   process.exit(1);
