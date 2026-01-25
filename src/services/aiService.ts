@@ -503,6 +503,7 @@ function parseStrainResponse(response: string): Array<{ name: string; value: str
     { regex: /(?:Effects?|Effect Profile)[:\-]?\s*(.+?)(?:\n\n|$)/is, name: '✨ Effects' },
     { regex: /(?:Flavor|Flavors?|Taste|Aroma|Aromas?)[:\-]?\s*(.+?)(?:\n\n|$)/is, name: '👃 Flavors/Aromas' },
     { regex: /(?:Terpenes?|Terpene Profile)[:\-]?\s*(.+?)(?:\n\n|$)/is, name: '🌿 Terpenes' },
+    { regex: /(?:User Reviews?|What People Think|Community Consensus|User Consensus|User Experiences?|Reputation|What Users (?:Love|Say|Think))[:\-]?\s*(.+?)(?:\n\n|$)/is, name: '👥 User Reviews & Consensus' },
     { regex: /(?:Growing|Grow Info|Growing Info|Cultivation)[:\-]?\s*(.+?)(?:\n\n|$)/is, name: '🌱 Growing Info' },
     { regex: /(?:Flowering Time|Flower Time|Flowering)[:\-]?\s*(.+?)(?:\n|$)/i, name: '⏱️ Flowering Time' },
     { regex: /(?:Yield|Yield Size)[:\-]?\s*(.+?)(?:\n|$)/i, name: '📊 Yield' },
