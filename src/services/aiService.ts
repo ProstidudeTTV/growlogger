@@ -120,9 +120,9 @@ export async function getStrainInfo(strainName: string): Promise<string> {
   }
 
   // Shorter, more efficient prompt
-  const systemPrompt = `You are a cannabis expert. Provide detailed information about cannabis strains including: type (Indica/Sativa/Hybrid), THC/CBD content, effects, flavors/terpenes, and growing info (flowering time, yield, difficulty). Be specific and accurate.`;
+  const systemPrompt = `You are a cannabis expert. Provide detailed information about cannabis strains including: type (Indica/Sativa/Hybrid), THC/CBD content, effects, flavors/terpenes, growing info (flowering time, yield, difficulty), and most importantly - what people generally think about this strain based on user reviews and community consensus. Include common experiences, what users love about it, any common complaints, and overall reputation. Be specific and accurate.`;
 
-  const userPrompt = `Tell me about the cannabis strain: ${strainName}`;
+  const userPrompt = `Tell me about the cannabis strain: ${strainName}. Include what people generally think about it, common user experiences, and community consensus.`;
 
   try {
 
